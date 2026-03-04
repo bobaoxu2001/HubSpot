@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HubSpot Big Data Analytics Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading Big Data Analytics</div>
+    <div class="loading-sub">Processing 4.85M+ records across 7 data entities...</div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">H</div>
+      <h1>HubSpot Big Data Analytics</h1>
+    </div>
+    <div class="header-meta">
+      <span class="header-badge">BIG DATA</span>
+      <span class="header-stat"><strong id="header-records">—</strong> records loaded</span>
+      <span class="header-stat">7 data entities</span>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-tabs">
+    <button class="nav-tab active" data-section="sec-overview">
+      <span class="tab-icon">◈</span>Overview
+    </button>
+    <button class="nav-tab" data-section="sec-revenue">
+      <span class="tab-icon">$</span>Revenue & Deals
+    </button>
+    <button class="nav-tab" data-section="sec-marketing">
+      <span class="tab-icon">◎</span>Marketing
+    </button>
+    <button class="nav-tab" data-section="sec-email">
+      <span class="tab-icon">✉</span>Email
+    </button>
+    <button class="nav-tab" data-section="sec-contacts">
+      <span class="tab-icon">◉</span>Contacts
+    </button>
+    <button class="nav-tab" data-section="sec-support">
+      <span class="tab-icon">⚑</span>Support
+    </button>
+    <button class="nav-tab" data-section="sec-web">
+      <span class="tab-icon">◐</span>Web Analytics
+    </button>
+    <button class="nav-tab" data-section="sec-companies">
+      <span class="tab-icon">⬡</span>Companies
+    </button>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- ═══ OVERVIEW ═══ -->
+    <section id="sec-overview" class="section active">
+      <div class="kpi-grid">
+        <div class="kpi-card blue">
+          <div class="kpi-label">Closed Revenue</div>
+          <div class="kpi-value" id="kpi-revenue">—</div>
+          <div class="kpi-sub">From 300K deals</div>
+        </div>
+        <div class="kpi-card cyan">
+          <div class="kpi-label">Weighted Pipeline</div>
+          <div class="kpi-value" id="kpi-pipeline">—</div>
+          <div class="kpi-sub">Risk-adjusted value</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Total Deals</div>
+          <div class="kpi-value" id="kpi-deals">—</div>
+          <div class="kpi-sub">Across all pipelines</div>
+        </div>
+        <div class="kpi-card orange">
+          <div class="kpi-label">Win Rate</div>
+          <div class="kpi-value" id="kpi-winrate">—</div>
+          <div class="kpi-sub">Closed Won / Total</div>
+        </div>
+        <div class="kpi-card purple">
+          <div class="kpi-label">Avg Deal Size</div>
+          <div class="kpi-value" id="kpi-avgdeal">—</div>
+          <div class="kpi-sub">Across all stages</div>
+        </div>
+        <div class="kpi-card pink">
+          <div class="kpi-label">Total Contacts</div>
+          <div class="kpi-value" id="kpi-contacts">—</div>
+          <div class="kpi-sub">CRM database</div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-label">Companies</div>
+          <div class="kpi-value" id="kpi-companies">—</div>
+          <div class="kpi-sub">Across 20 industries</div>
+        </div>
+        <div class="kpi-card cyan">
+          <div class="kpi-label">Web Sessions</div>
+          <div class="kpi-value" id="kpi-sessions">—</div>
+          <div class="kpi-sub">Total tracked</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Conversion Rate</div>
+          <div class="kpi-value" id="kpi-conversion">—</div>
+          <div class="kpi-sub">Session → Convert</div>
+        </div>
+        <div class="kpi-card orange">
+          <div class="kpi-label">Bounce Rate</div>
+          <div class="kpi-value" id="kpi-bounce">—</div>
+          <div class="kpi-sub">Single-page sessions</div>
+        </div>
+        <div class="kpi-card purple">
+          <div class="kpi-label">CSAT Score</div>
+          <div class="kpi-value" id="kpi-csat">—</div>
+          <div class="kpi-sub">Avg satisfaction</div>
+        </div>
+        <div class="kpi-card pink">
+          <div class="kpi-label">SLA Compliance</div>
+          <div class="kpi-value" id="kpi-sla">—</div>
+          <div class="kpi-sub">On-time resolution</div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-label">Email Open Rate</div>
+          <div class="kpi-value" id="kpi-openrate">—</div>
+          <div class="kpi-sub">800K campaigns</div>
+        </div>
+        <div class="kpi-card cyan">
+          <div class="kpi-label">Email Click Rate</div>
+          <div class="kpi-value" id="kpi-clickrate">—</div>
+          <div class="kpi-sub">Click-through</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Support Tickets</div>
+          <div class="kpi-value" id="kpi-tickets">—</div>
+          <div class="kpi-sub">Total processed</div>
+        </div>
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Revenue Trend (Monthly)</span>
+            <span class="chart-card-badge">36 months</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-revenue-trend"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Deal Pipeline Funnel</span>
+            <span class="chart-card-badge">300K deals</span>
+          </div>
+          <div class="funnel" id="funnel-stages"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ REVENUE & DEALS ═══ -->
+    <section id="sec-revenue" class="section">
+      <div class="section-title">
+        <div class="icon blue">$</div>
+        Revenue & Deal Analytics
+      </div>
+
+      <div class="chart-grid cols-1">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Monthly Revenue & Pipeline Trend</span>
+          </div>
+          <div class="chart-container tall"><canvas id="chart-revenue-trend-full"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Revenue by Region</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-deals-region"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Top Industries by Revenue</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-deals-industry"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Pipeline Distribution</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-deals-pipeline"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Deal Funnel Stages</span>
+          </div>
+          <div class="funnel" id="funnel-stages-detail"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ MARKETING ═══ -->
+    <section id="sec-marketing" class="section">
+      <div class="section-title">
+        <div class="icon pink">◎</div>
+        Marketing Analytics — 1M Events
+      </div>
+
+      <div class="chart-grid cols-1">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Marketing Events & Engagement Trend</span>
+            <span class="chart-card-badge">1M events</span>
+          </div>
+          <div class="chart-container tall"><canvas id="chart-mktg-trend"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Channel Performance Radar</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-mktg-channels"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Event Type Distribution</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-mktg-events"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EMAIL ═══ -->
+    <section id="sec-email" class="section">
+      <div class="section-title">
+        <div class="icon cyan">✉</div>
+        Email Campaign Analytics — 800K Events
+      </div>
+
+      <div class="chart-grid cols-1">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Open & Click Rate Trend</span>
+          </div>
+          <div class="chart-container tall"><canvas id="chart-email-trend"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Campaign Type Performance</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-email-perf"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Performance by Send Hour</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-email-hour"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CONTACTS ═══ -->
+    <section id="sec-contacts" class="section">
+      <div class="section-title">
+        <div class="icon green">◉</div>
+        Contact & Lead Analytics — 500K Contacts
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Lifecycle Stage Funnel</span>
+            <span class="chart-card-badge">500K contacts</span>
+          </div>
+          <div class="funnel" id="funnel-lifecycle"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Contacts by Lead Source</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-contacts-source"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SUPPORT ═══ -->
+    <section id="sec-support" class="section">
+      <div class="section-title">
+        <div class="icon orange">⚑</div>
+        Support Analytics — 200K Tickets
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Tickets by Category</span>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th style="text-align:right">Tickets</th>
+                  <th style="text-align:right">Avg Resolution</th>
+                  <th style="text-align:right">SLA %</th>
+                  <th style="text-align:right">CSAT</th>
+                </tr>
+              </thead>
+              <tbody id="support-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Priority Distribution & SLA</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-support-priority"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ WEB ANALYTICS ═══ -->
+    <section id="sec-web" class="section">
+      <div class="section-title">
+        <div class="icon purple">◐</div>
+        Web Analytics — 2M Sessions
+      </div>
+
+      <div class="chart-grid cols-1">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Sessions & Conversion Trend</span>
+            <span class="chart-card-badge">2M sessions</span>
+          </div>
+          <div class="chart-container tall"><canvas id="chart-web-trend"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Top Pages</span>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Page</th>
+                  <th style="text-align:right">Sessions</th>
+                  <th>Traffic</th>
+                  <th style="text-align:right">Bounce</th>
+                  <th style="text-align:right">Conv.</th>
+                </tr>
+              </thead>
+              <tbody id="web-pages-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Sessions by Country</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-web-country"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Device Breakdown</span>
+          </div>
+          <div class="chart-container short"><canvas id="chart-web-device"></canvas></div>
+        </div>
+        <div class="chart-card" style="display:flex;align-items:center;justify-content:center">
+          <div style="text-align:center">
+            <div style="font-size:4rem;font-weight:800;background:linear-gradient(135deg,#6366f1,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent">2M+</div>
+            <div style="color:var(--text-muted);font-size:0.9rem;margin-top:8px">Web sessions tracked across<br>20 pages × 20 countries × 3 devices</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ COMPANIES ═══ -->
+    <section id="sec-companies" class="section">
+      <div class="section-title">
+        <div class="icon blue">⬡</div>
+        Company Analytics — 50K Companies
+      </div>
+
+      <div class="chart-grid cols-2">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Companies by Industry</span>
+            <span class="chart-card-badge">20 industries</span>
+          </div>
+          <div class="chart-container tall"><canvas id="chart-companies-industry"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <span class="chart-card-title">Companies by Region</span>
+            <span class="chart-card-badge">7 regions</span>
+          </div>
+          <div class="chart-container"><canvas id="chart-companies-region"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
